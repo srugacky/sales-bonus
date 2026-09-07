@@ -85,7 +85,7 @@ function analyzeSalesData(data, options) {
             if (!seller.products_sold[item.sku]) {
                 seller.products_sold[item.sku] = 0;
             }
-            seller.products_sold[item.sku]++;
+            seller.products_sold[item.sku] += item.quantity;
         })
     })
 
@@ -97,7 +97,8 @@ function analyzeSalesData(data, options) {
             sku: key,
             quantity: value
         }));
-        seller.top_products = seller.top_products.sort((a, b) => b.quantity - a.quantity).slice(0, 10);
+        seller.top_products.sort((a, b) => b.quantity - a.quantity);
+        seller.top_products = seller.top_products.slice(0, 10);
     });
 
     return sellerStats.map(seller => ({
